@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { uid } from 'uid';
 import { Icon } from '@iconify/vue';
 import TodoCreator from '@/components/TodoCreator.vue';
@@ -10,6 +10,10 @@ watch(todoList, () => {
   setTodoListLocalStorage();
 },
   { deep: true });
+
+const todoCompleted = computed(() => {
+  return todoList.value.every((todo) => todo.isCompleted);
+});
 
 const fetchTodoList = () => {
   const savedTodoList = JSON.parse(localStorage.getItem('todoList'));
@@ -57,6 +61,10 @@ const deleteTodo = (todoId) => {
     <p class="todos-msg" v-else>
       <Icon icon="noto-v1:relieved-face" width="22" />
       <span>0 todos left</span>
+    </p>
+    <p class="todos-msg" v-if="todoCompleted && todoList.length > 0">
+      <Icon icon="noto-v1:smiling-face-with-sunglasses" width="22" />
+      <span>All todos completed</span>
     </p>
   </main>
 </template>
