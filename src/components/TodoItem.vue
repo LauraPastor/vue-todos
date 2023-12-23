@@ -11,7 +11,7 @@ const props = defineProps({
         required: true,
     },
 });
-defineEmits(["toggle-complete", "edit-todo", "update-todos"]);
+defineEmits(["toggle-complete", "edit-todo", "update-todos", "delete-todo"]);
 </script>
 <template>
     <li>
@@ -27,7 +27,7 @@ defineEmits(["toggle-complete", "edit-todo", "update-todos"]);
             <Icon v-if="todo.isEditing" icon="ph:check-circle" color="#41b080" width="22"
                 @click="$emit('edit-todo', index)" />
             <Icon v-else icon="ph:pencil-fill" color="#41b080" width="22" @click="$emit('edit-todo', index)" />
-            <Icon icon="ph:trash" color="#f95e5e" width="22" />
+            <Icon icon="ph:trash" color="#f95e5e" width="22" @click="$emit('delete-todo', todo.id)" />
         </div>
     </li>
 </template>
